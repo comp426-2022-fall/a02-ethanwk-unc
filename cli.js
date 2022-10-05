@@ -11,7 +11,7 @@ const args = minimist(process.argv.slice(2));
 let timezone = moment.tz.guess();
 var lat = 0;
 var lon = 0;
-let days = 1; //"next" day
+var days = 1; //"next" day
 
 //console.log(timezone);
 
@@ -44,6 +44,9 @@ if (args.w) {//longitutde is negatve
 if (args.t) {//sets timezone
     timezone = args.t;
 }
+if (args.d){
+    days = args.d;
+}
 //fetch data
 const response = await fetch(
     'https://api.open-meteo.com/v1/forecast?latitude=' + lat +
@@ -52,9 +55,25 @@ const response = await fetch(
 );
 const data = await response.json();
 
+//show data
 if(args.j){
     console.log(data);
-    process.exit(0)
+    process.exit(0);
 }
 
+//find precipitation on day
+var precipitation = data.daily.precipitation_sum[days];
+console.log("ayo " + precipitation + " " + days);
 
+if(precipitation > 0 && days == 0){//precipitation today
+    console.log("You'll need your galoshes today");
+} 
+if(precipitation > 0 && days == 1) {//precipitation tomorrow
+    console.log("You'll need your galoshes tomorrow");
+}
+if (precipitation > 0 && days > 1) {//precipitation this week
+    console.log("You'll need your galoshes this week");
+}
+if (precipitation <= 0){//no precipitation
+    console.log("You don't need your galoshes");
+}
