@@ -63,7 +63,7 @@ if(args.j){
 
 //find precipitation on day
 var precipitation = data.daily.precipitation_sum[days];
-console.log("ayo " + precipitation + " " + days);
+//console.log("ayo " + precipitation + " " + days);
 
 if(precipitation > 0 && days == 0){//precipitation today
     console.log("You'll need your galoshes today");
