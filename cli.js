@@ -1,11 +1,15 @@
 #!/usr/bin/env node
 
 import minimist from "minimist";
+import moment from 'moment-timezone';
 
 //user input
 const args = minimist(process.argv.slice(2));
 
-//console.log(args);
+//set default timezone if not given
+let timezone = moment.tz.guess();
+
+//console.log(timezone);
 
 //help screen
 if (args.h) {
@@ -19,4 +23,5 @@ if (args.h) {
     -j            Echo pretty JSON from open-meteo API and exit.
 	`);
 }
+
 
